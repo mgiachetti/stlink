@@ -1,0 +1,21 @@
+name: Build
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: ./mingw64-build.bat
+    - run: dir -s *.exe
+    - run: dir -s *.zip
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v2
+      with:
+        name: stlink-1.6.1-win32.zip
+        path: build-mingw\dist\stlink-1.6.1-win32.zip
+        retention-days: 5
+    
